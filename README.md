@@ -1,2 +1,3 @@
-# testproject
+# SailsChatta
 ### a Sails application
+Currently under developement...

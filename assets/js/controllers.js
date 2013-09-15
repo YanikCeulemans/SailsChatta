@@ -10,7 +10,7 @@ function HomeCtrl($scope, $http){
                 console.log('Room list recieved: ', rooms);
                 $scope.$apply(function () {
                     $scope.testModel.rooms = rooms;
-                })
+                });
             });
 
             socket.on('message', function messageReceived (message) {
