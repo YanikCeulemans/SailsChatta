@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>Welcome to chatroom: {{chatmodel.room.name}}</h1>
+
+    <div class="messages-container">
+        <div class="message-container" ng-repeat="message in chatmodel.room.messages">
+            <p class="user">User: </p>
+            <p class="message">{{message}}</p>
+        </div>
+    </div>
+    <form>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="chatmodel.newMessage"/>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" ng-click="sendMessage()">Send</button>
+            </span>
+        </div>
+    </form>
+</div>

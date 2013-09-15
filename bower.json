@@ -1,0 +1,24 @@
+{
+  "name": "testproject",
+  "version": "0.0.1",
+  "description": "a test project",
+  "main": "app.js",
+  "keywords": [
+    "test"
+  ],
+  "authors": [
+    "me"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.0.8"
+  }
+}
