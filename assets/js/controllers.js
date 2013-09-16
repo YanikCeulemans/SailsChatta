@@ -1,11 +1,14 @@
 console.log('loading controllers...');
 var socket;
 
+/////////////////////////////////////
+// TODO: Refactor the named functions
+/////////////////////////////////////
 function HomeCtrl($scope, $http) {
     $scope.testModel = {};
 
     function getRooms(socket) {
-        if ( !! !socket) {
+        if (!!!socket) {
             return false;
         }
         socket.get('/room', function(rooms) {
@@ -17,7 +20,7 @@ function HomeCtrl($scope, $http) {
     }
 
     function listenRoomChanges(socket) {
-        if ( !! !socket) {
+        if (!!!socket) {
             return false;
         }
         socket.on('message', function messageReceived(message) {
@@ -49,18 +52,46 @@ function HomeCtrl($scope, $http) {
 function ChatroomCtrl($scope, $http, $routeParams) {
     $scope.chatmodel = {};
 
-    $http.get('/room/' + $routeParams.chatroomId).success(function(data) {
-        $scope.chatmodel.room = data;
-    });
+    function getRoom(socket){
+        socket.get('/Room/' + $routeParams.chatroomId, function (room) {
+            $scope.$apply(function () {
+                $scope.chatmodel.room = room;
+            });
+        });
+    };
+
+    function getMessages(socket){
+        socket.get('/Message/getMessagesByRoom?roomid=' + $routeParams.chatroomId, function (messages) {
+            console.log('Messages received: ', messages);
+            $scope.$apply(function () {
+                $scope.chatmodel.messages = messages;
+            });
+        });
+
+        socket.on('message', function (message) {
+            console.log(message);
+        });
+    };
+
+    if (socket){
+        getRoom(socket);
+        getMessages(socket);
+    }else{
+        socket = io.connect();
+        socket.on('connect', function socketConnected() {
+            getRoom(socket);
+            getMessages(socket);
+        });
+    }
 
     $scope.sendMessage = function() {
-        console.log($scope.chatmodel.newMessage);
-        socket.get('/room/postMessage?message=' + $scope.chatmodel.newMessage, function(response) {
-            console.log('message added: ' + response);
-            $scope.$apply(function() {
-                $scope.chatmodel.room = response;
-            })
-        })
-        $scope.chatmodel.newMessage = '';
+        // TODO: Refactor... check for null...
+        socket.post('/Message', {
+            room: $scope.chatmodel.room.id,
+            user: 1,
+            content: $scope.chatmodel.newMessage
+        }, function (response) {
+            console.log(response);
+        });
     }
 }

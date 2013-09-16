@@ -2,7 +2,7 @@
     <h1>Welcome to chatroom: {{chatmodel.room.name}}</h1>
 
     <div class="messages-container">
-        <div class="message-container" ng-repeat="message in chatmodel.room.messages">
+        <div class="message-container" ng-repeat="message in chatmodel.messages">
             <p class="user">User: </p>
             <p class="message">{{message}}</p>
         </div>

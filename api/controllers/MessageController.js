@@ -7,26 +7,29 @@
 
 module.exports = {
 
-  /* e.g.
-  sayHello: function (req, res) {
-    res.send('hello world!');
-  }
-  */
-  addMessage: function (req, res) {
-      var userId = req.param('userid');
-      var roomId = req.param('roomid');
+    getMessagesByRoom: function(req, res) {
+        var roomId = req.param('roomid');
 
-      Message.create({
-        user: userId,
-        room: roomId
-      }).done(function (err, message) {
-          if (err){
-            return console.log(err);
-          }else{
-            console.log('message created: ', message);
-          }
-      });
-  }
-  
+        if(!!!roomId){
+            res.send('please specify the roomId', 500);
+        }
+        console.log('Room id is: ', roomId);
+        Message.find({
+            where: {
+                content: {
+                    contains: 'test' // TODO: Continue from here ... we need to get the chat rooms by id !
+                }
+            }
+        }).limit('10').done(function (err, messages) {
+            if (err){
+                // error handling...
+                console.log(err);
+            }else{
+                console.log('sending messages: ', messages);
+                res.json(messages);
+            }
+        })
+    }
+
 
 };
