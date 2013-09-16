@@ -10,12 +10,9 @@ module.exports = {
 
   attributes: {
     
-    user: {
-        model: 'User' // This does not work yet ... switch to manual entering of ids (no relational checking)
-    },
-    room: {
-        model: 'Room'
-    }
+    user: 'integer',
+    room: 'integer',
+    content: 'text'
     
   }
 

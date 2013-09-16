@@ -13,12 +13,6 @@ module.exports = {
     name: {
       type: 'string',
       required: true
-    },
-    users: {
-      collection: 'User'
-    },
-    messages: {
-      collection: 'Message'
     }
     
   }

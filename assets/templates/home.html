@@ -3,6 +3,8 @@
         <h1>Welcome to Chatta</h1>
         <p>Pick a room and start chatting away !</p>
         <h3>Rooms:</h3>
-        <a href="#/chatroom/{{room.id}}" ng-repeat="room in testModel.rooms" class="btn btn-default btn-lg">{{room.name}}</a>
+        <div class="room-container">
+        	<a href="#/chatroom/{{room.id}}" ng-repeat="room in testModel.rooms" class="btn btn-default btn-lg room">{{room.name}}</a>
+        </div>
     </div>
 </div>
