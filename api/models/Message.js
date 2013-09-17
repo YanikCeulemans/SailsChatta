@@ -8,12 +8,21 @@
 
 module.exports = {
 
-  attributes: {
-    
-    user: 'integer',
-    room: 'integer',
-    content: 'text'
-    
-  }
+    attributes: {
+
+        user: {
+            type: 'integer',
+            required: true
+        },
+        room: {
+            type: 'integer',
+            required: true
+        },
+        content: {
+            type: 'text',
+            required: true
+        }
+
+    }
 
 };

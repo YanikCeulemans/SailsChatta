@@ -3,8 +3,8 @@
 
     <div class="messages-container">
         <div class="message-container" ng-repeat="message in chatmodel.messages">
-            <p class="user">User: </p>
-            <p class="message">{{message}}</p>
+            <p class="user">{{message.username}}: </p>
+            <p class="message">{{message.content}}</p>
         </div>
     </div>
     <form>
