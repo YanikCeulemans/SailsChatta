@@ -73,9 +73,33 @@
 );*/
 
 var app = angular.module('app', []).
-config(function($routeProvider){
-        $routeProvider.when('/', {controller: HomeCtrl, templateUrl: 'templates/home.html'}).
-            when('/chatroom/:chatroomId', {controller: ChatroomCtrl, templateUrl: 'templates/chatroom.html'}).
-            otherwise({redirectTo: '/'});
+config(function($routeProvider) {
+    $routeProvider.when('/', {
+        controller: HomeCtrl,
+        templateUrl: 'templates/home.html'
+    }).
+    when('/chatroom/:chatroomId', {
+        controller: ChatroomCtrl,
+        templateUrl: 'templates/chatroom.html'
+    }).
+    otherwise({
+        redirectTo: '/'
     });
+});
 
+app.factory('userService', function() {
+    return {
+        user: {}
+    }
+});
+
+app.directive('chattaVdropToggle', function(){
+    return function (scope, element, attrs) {
+        element.addClass('vdrop');
+        scope.$watch(attrs.chattaVdropToggle, function (newVal, oldVal) {
+            if (newVal){
+                element.toggleClass('shown', !!newVal);
+            }
+        });
+    };
+});

@@ -1,11 +1,22 @@
 console.log('loading controllers...');
+// TODO: Refactor the socket...
 var socket;
 
 /////////////////////////////////////
 // TODO: Refactor the named functions
 /////////////////////////////////////
-function HomeCtrl($scope, $http) {
+function HomeCtrl($scope, $http, userService) {
     $scope.testModel = {};
+
+    $scope.createUser = function () {
+        socket.post('/User/uniqueCreate?nickname=' + $scope.nickname, function (response) {
+            // I am not sure whether this has to be wrapped in a $apply
+            $scope.$apply(function () {
+                $scope.testModel.user = response;
+                userService.user = response;
+            });
+        });
+    };
 
     function getRooms(socket) {
         if (!!!socket) {
@@ -49,7 +60,7 @@ function HomeCtrl($scope, $http) {
     })(window.io);
 }
 
-function ChatroomCtrl($scope, $http, $routeParams) {
+function ChatroomCtrl($scope, $http, $routeParams, userService) {
     $scope.chatmodel = {
         messages: []
     };
@@ -90,14 +101,15 @@ function ChatroomCtrl($scope, $http, $routeParams) {
     })(window.io);
 
     $scope.sendMessage = function() {
+        if(!!!userService.user){
+            console.log('A user should be defined by now...');
+            return;
+        }
         // TODO: Refactor... check for null...
         socket.post('/Message/createMsg', {
             room: $routeParams.chatroomId,
-            user: 1,
+            user: userService.user.id,
             content: $scope.chatmodel.newMessage
-        }, function (response) {
-            // Because we go over the socket... we don't need this !
-            //console.log('response: ', response);
         });
         $scope.chatmodel.newMessage = '';
     }

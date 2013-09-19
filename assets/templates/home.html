@@ -1,10 +1,29 @@
-<div class="jumbotron">
+
     <div class="container">
-        <h1>Welcome to Chatta</h1>
-        <p>Pick a room and start chatting away !</p>
-        <h3>Rooms:</h3>
-        <div class="room-container">
-        	<a href="#/chatroom/{{room.id}}" ng-repeat="room in testModel.rooms" class="btn btn-default btn-lg room">{{room.name}}</a>
+        <h1>
+            Welcome to Chatta
+        </h1>
+        <form action="" role="form"  class="form-horizontal" ng-submit="createUser()">
+            <fieldset>
+                <legend>Enter a nickname</legend>
+                <div class="form-group clearfix">
+                <label for="nickname" class="col-lg-2 control-label">
+                    Nickname:
+                </label>
+                <div class="col-lg-8">
+                    <input type="text" ng-model="nickname" class="form-control pull-left half-width" id="nickname" placeholder=".:*360NoScope(nohardscopes)*:." />
+                    <button class="btn btn-primary" type="submit">Choose</button>
+                </div>
+            </div>
+            </fieldset>
+            
+        </form>
+        <div chatta-vdrop-toggle="testModel.user">
+            <h3>
+                Rooms:
+            </h3>
+            <div class="room-container">
+                <a href="#/chatroom/{{room.id}}" ng-repeat="room in testModel.rooms" class="btn btn-default room">{{room.name}}</a>
+            </div>
         </div>
     </div>
-</div>
