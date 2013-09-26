@@ -1,11 +1,11 @@
 console.log('loading controllers...');
-// TODO: Refactor the socket...
-var socket;
 
 /////////////////////////////////////
 // TODO: Refactor the named functions
 /////////////////////////////////////
-function HomeCtrl($scope, $http, userService) {
+function HomeCtrl($scope, $http, userService, socketService) {
+    var socketPromise = socketService.getSocketPromise();
+
     $scope.testModel = {};
 
     $scope.createUser = function () {
@@ -18,46 +18,25 @@ function HomeCtrl($scope, $http, userService) {
         });
     };
 
-    function getRooms(socket) {
-        if (!!!socket) {
-            return false;
-        }
+    socketPromise.then(function (socket) {
+        console.log('socket ready.', socket);
         socket.get('/room', function(rooms) {
             console.log('Room list recieved: ', rooms);
             $scope.$apply(function() {
                 $scope.testModel.rooms = rooms;
             });
         });
-    }
 
-    function listenRoomChanges(socket) {
-        if (!!!socket) {
-            return false;
-        }
         socket.on('message', function messageReceived(message) {
             console.log('Message received: ', message);
+            // TODO: perhaps this can be cleaner...
             if (message.model === 'room' && message.verb === 'create') {
                 $scope.$apply(function() {
                     $scope.testModel.rooms.push(message.data);
                 });
             }
         });
-    }
-
-    (function(io) {
-        if (socket) {
-            getRooms(socket);
-            listenRoomChanges(socket);
-        } else {
-            socket = io.connect();
-
-            socket.on('connect', function socketConnected() {
-                getRooms(socket);
-                listenRoomChanges(socket);
-            });
-        }
-
-    })(window.io);
+    });
 }
 
 function ChatroomCtrl($scope, $http, $routeParams, userService) {
