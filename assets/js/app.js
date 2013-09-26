@@ -37,11 +37,11 @@ app.service('socketService', ['$q', '$rootScope', function($q, $rootScope) {
     }
 }]);
 
-app.directive('chattaVdropToggle', function() {
+app.directive('chattaShow', function() {
     return function(scope, element, attrs) {
         element.addClass('vdrop');
-        scope.$watch(attrs.chattaVdropToggle, function(newVal, oldVal) {
-            if (newVal) {
+        scope.$watch(attrs.chattaShow, function(newVal, oldVal) {
+            if (newVal !== undefined) {
                 element.toggleClass('shown', !! newVal);
             }
         });

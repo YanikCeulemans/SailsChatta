@@ -22,10 +22,12 @@
 }
 
 .vdrop{
+    position: absolute;
     opacity: 0;
     transition: 0.3s all;
     -webkit-transform: translateY(100px);
     &.shown{
+        position: initial;
         opacity: 100;
         -webkit-transform: translateY(0px);
     }
