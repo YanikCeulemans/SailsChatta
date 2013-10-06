@@ -13,8 +13,28 @@ config(function($routeProvider) {
     });
 });
 
-app.service('userService', function() {
+app.service('userService', function($rootScope, $timeout) {
     this.user = {};
+
+    /*setTimeout(function () {
+        $rootScope.$apply(function () {
+            this.user = {nickname: 'this is a nickname'}
+        });
+    }, 5000);*/
+
+    $timeout(function () {
+        this.user = {nickname: 'a nickname'};
+    }, 5000);
+
+    /*this.getUser = function () {
+        return user;
+    };
+
+    this.setUser = function (toSet) {
+        $rootScope.$apply(function () {
+            user = toSet;
+        });
+    };*/
 });
 
 app.service('socketService', ['$q', '$rootScope', function($q, $rootScope) {

@@ -8,6 +8,12 @@ function HomeCtrl($scope, $http, userService, socketService) {
 
     $scope.homeModel = {};
 
+    $scope.userModel = userService.user;
+
+    $scope.$watch('userService.user', function () {
+        console.log('val changed');
+    });
+
     socketPromise.then(function (socket) {
         console.log('socket ready.', socket);
         socket.get('/room', function(rooms) {
@@ -32,8 +38,9 @@ function HomeCtrl($scope, $http, userService, socketService) {
             socket.post('/User/uniqueCreate?nickname=' + $scope.nickname, function (response) {
                 // I am not sure whether this has to be wrapped in a $apply
                 $scope.$apply(function () {
-                    $scope.homeModel.user = response;
+                    $scope.userModel = response;
                     userService.user = response;
+                    console.log('userModel:', $scope.userModel);
                 });
             });
         };

@@ -1,9 +1,9 @@
 
     <div class="container">
         <h1>
-            Welcome to Chatta <span ng-bind="homeModel.user.nickname"></span>
+            Welcome to Chatta <span ng-bind="userModel.nickname"></span>
         </h1>
-        <form action="" role="form"  class="form-horizontal" ng-submit="createUser()" chatta-show="!homeModel.user">
+        <form action="" role="form"  class="form-horizontal" ng-submit="createUser()" chatta-show="!userModel.nickname">
             <fieldset>
                 <legend>Enter a nickname</legend>
                 <div class="form-group clearfix">
@@ -18,11 +18,10 @@
             </fieldset>
             
         </form>
-        <div chatta-show="homeModel.user" class="vdrop">
+        <div chatta-show="userModel.nickname" class="vdrop">
             <h3>
-                Welcome {{ homeModel.user.nickname }}
+                These are the available chatrooms:
             </h3>
-            <p>These are the available rooms:</p>
             <div class="room-container">
                 <a href="#/chatroom/{{room.id}}" ng-repeat="room in homeModel.rooms" class="btn btn-default room">{{room.name}}</a>
             </div>
